@@ -1,0 +1,84 @@
+name: bottom-up-controlling-dp
+version: v1beta
+entity: product
+type: data
+purpose: The purpose of the Bottom-Up Controlling Data Product is to provide reliable insights into internal Sales P&L by combining invoiced amounts and order volumes at transfer prices. This data product enables internal financial steering by providing a simulated internal Sales P&L view, analyzing internal margins per customer to highlight discrepancies or optimization opportunities, and offering operational transparency between forecasting, sourcing, and sales data. It relies on Invoicing data out of SAP and calculations done in MidOffice DB out of Aligne.
+
+tags:
+  - DPDomain.Sales
+  - DPDomain.Controlling
+  - DPUsecase.BottomUp
+  - DPTier.Consumer Aligned
+
+description: The Bottom-Up Controlling Data Product consolidates data from multiple source aligned data products to provide comprehensive controlling analysis. It combines invoice details mapping with invoice power data to create a unified view for internal financial steering. The data product processes data from monthly revenue, installation dimensions, transaction positions, and invoice power sources to generate structured datasets that support analytical insights into internal margins, customer profitability, and operational transparency between forecasting, sourcing, and sales data.
+
+refs:
+  - title: 'DataOs_Info'
+    href: https://dataos.info/
+
+v1beta:
+  data:
+    meta:
+      title: Bottom-Up Controlling Data Product
+      sourceCodeUrl: https://github.com/jsampaiog/dataproduct/bottom-up-controlling-dp
+      trackerUrl: https://enovos-lu.atlassian.net/browse/DWH-178
+
+    collaborators:
+      - name: khushibedar
+        description: contributor
+
+      - name: kishanmahajan
+        description: contributor
+
+      - name: dinkercharak
+        description: contributor
+
+      - name: gunasekaranraja
+        description: contributor
+
+      - name: josegomes
+        description: contributor
+
+    resource:
+      description: "This bundle facilitates data ingestion, processing, and quality checks, ensuring the integrity and consistency of bottom-up controlling data across multiple source aligned data products."
+      refType: dataos
+      ref: bundle:v1beta:bottom-up-controlling-data-bundle
+
+    inputs:
+      - description: Monthly revenue data including invoice details, amounts, volumes, and delivery dates.
+        purpose: Primary source for invoice and revenue data.
+        refType: dataos
+        ref: dataset:icebase:bottomup:monthly_revenue
+
+      - description: Installation dimension data with installation IDs and external POD identifiers.
+        purpose: Installation mapping and POD identification.
+        refType: dataos
+        ref: dataset:icebase:bottomup:dim_installation_last
+
+      - description: Transaction number and POD position data with metering codes and planned dates.
+        purpose: Position mapping and contract association.
+        refType: dataos
+        ref: dataset:icebase:bottomup:tnum_pod_position
+
+      - description: Invoice power data with book information, customer data, amounts, and segments.
+        purpose: Power invoice data for comprehensive controlling analysis.
+        refType: dataos
+        ref: dataset:icebase:bottomup:tp_invoice_power
+
+    ports:
+      lens:
+        ref: lens:v1alpha:bottom-up-controlling:public
+        refType: dataos
+
+      rest:
+        - url: https://paper-plane.dataos.app/lens2/api/public:bottom-up-controlling/v2/rest
+          meta:
+            foo: bar
+
+      postgres:
+        - host: tcp.paper-plane.dataos.app
+          port: 5432
+          params:
+            ssl: true
+          meta:
+            foo: bar
