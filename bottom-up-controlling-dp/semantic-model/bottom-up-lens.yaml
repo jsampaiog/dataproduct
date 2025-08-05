@@ -23,7 +23,7 @@ lens:
     catalog: lakehouse
   repo:
     url: https://github.com/jsampaiog/dataproduct
-    lensBaseDir: solutions-practices/dataproducts/bottom-up-controlling-dp/build/semantic-model/model
+    lensBaseDir: dataproduct/bottom-up-controlling-dp/build/semantic-model/model
     syncFlags:
       - --ref=main
 
