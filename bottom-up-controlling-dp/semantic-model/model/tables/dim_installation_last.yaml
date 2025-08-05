@@ -1,0 +1,23 @@
+tables:
+  - name: dim_installation_last
+    sql: {{ load_sql('dim_installation_last') }}
+    description: Source aligned data product for installation dimension data.
+    public: true
+
+    dimensions:
+      - name: installation_id
+        type: string
+        column: installation_id
+        description: "The unique identifier for the installation."
+        primary_key: true
+
+      - name: installation_last_ext_pod_id
+        type: string
+        column: installation_last_ext_pod_id
+        description: "The external POD identifier for the installation."
+
+    measures:
+      - name: count
+        sql: "{TABLE.installation_id}"
+        type: count
+        description: "Total number of installation records." 

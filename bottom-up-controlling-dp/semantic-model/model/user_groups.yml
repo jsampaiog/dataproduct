@@ -1,0 +1,33 @@
+user_groups:
+  - name: segment_data
+    api_scopes:
+      - meta
+      - data
+      - graphql
+      - jobs
+      - source
+    includes:
+      - users:id:dinkercharak
+      - users:id:kishanmahajan
+      - users:id:josegomes
+  - name: reader
+    api_scopes:
+      - meta
+      - data
+      - graphql
+      - jobs
+      - source
+    includes:
+      - users:id:dinkercharak
+      - users:id:josegomes
+    excludes:
+      - users:id:kishanmahajan
+
+  - name: default
+    api_scopes:
+      - meta
+      - data
+      - graphql
+      - jobs
+      - source
+    includes: "*"

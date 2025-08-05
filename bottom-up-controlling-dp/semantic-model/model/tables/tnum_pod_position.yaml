@@ -1,0 +1,37 @@
+tables:
+  - name: tnum_pod_position
+    sql: {{ load_sql('tnum_pod_position') }}
+    description: Source aligned data product for transaction number and POD position data.
+    public: true
+
+    dimensions:
+      - name: metering_code
+        type: string
+        column: metering_code
+        description: "The metering code for the position."
+
+      - name: planned_start_date
+        type: time
+        column: planned_start_date
+        description: "The planned start date for the position."
+
+      - name: planned_end_date
+        type: time
+        column: planned_end_date
+        description: "The planned end date for the position."
+
+      - name: tnum
+        type: string
+        column: tnum
+        description: "The transaction number."
+
+      - name: contract_name
+        type: string
+        column: contract_name
+        description: "The name of the contract."
+
+    measures:
+      - name: count
+        sql: "{TABLE.tnum}"
+        type: count
+        description: "Total number of position records." 

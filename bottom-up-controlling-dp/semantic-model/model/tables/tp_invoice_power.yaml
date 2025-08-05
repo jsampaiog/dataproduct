@@ -1,0 +1,87 @@
+tables:
+  - name: tp_invoice_power
+    sql: {{ load_sql('tp_invoice_power') }}
+    description: Source aligned data product for invoice power data.
+    public: true
+
+    dimensions:
+      - name: book
+        type: string
+        column: book
+        description: "The book identifier for the transaction."
+
+      - name: booking_month
+        type: time
+        column: booking_month
+        description: "The month when the booking was made."
+
+      - name: country
+        type: string
+        column: country
+        description: "The country where the transaction occurred."
+
+      - name: cpty
+        type: string
+        column: cpty
+        description: "The counterparty involved in the transaction."
+
+      - name: customer
+        type: string
+        column: customer
+        description: "The customer name."
+
+      - name: delivery_month
+        type: time
+        column: delivery_month
+        description: "The month when delivery is scheduled."
+
+      - name: ent_inv
+        type: string
+        column: ent_inv
+        description: "The entity invoice identifier."
+
+      - name: invoice_part
+        type: string
+        column: invoice_part
+        description: "The part number of the invoice."
+
+      - name: report_asof_date
+        type: time
+        column: report_asof_date
+        description: "The report as-of date."
+
+      - name: segment
+        type: string
+        column: segment
+        description: "The business segment."
+
+      - name: sub_segment
+        type: string
+        column: sub_segment
+        description: "The business sub-segment."
+
+      - name: tnumgroup
+        type: string
+        column: tnumgroup
+        description: "The transaction number group."
+
+      - name: zkey
+        type: number
+        column: zkey
+        description: "The zkey identifier."
+
+    measures:
+      - name: inv_amt
+        sql: "{TABLE.inv_amt}"
+        type: sum
+        description: "Total invoice amount."
+
+      - name: vol_phys
+        sql: "{TABLE.vol_phys}"
+        type: sum
+        description: "Physical volume."
+
+      - name: count
+        sql: "{TABLE.zkey}"
+        type: count
+        description: "Total number of records." 

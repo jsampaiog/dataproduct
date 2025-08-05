@@ -1,0 +1,91 @@
+---
+version: v1alpha
+name: "bottom-up-controlling"
+layer: user
+type: lens
+tags:
+  - Domain.Controlling
+  - lens
+  - DPTier.Consumer Aligned
+  - DPUsecase.BottomUp
+description: "Bottom-Up Controlling (BUC) is a high-value data product designed to provide reliable insights into internal Sales P&L.
+The Bottom-Up Controlling data product supports internal financial steering by:
+Providing a simulated internal Sales P&L view by combining invoiced amounts and order volumes at transfer prices.
+Enabling the user to analyze internal margins per customer, highlighting discrepancies or optimization opportunities.
+Offering operational transparency between forecasting, sourcing, and sales data.
+It relies on Invoicing data out of SAP, and calculations done in MidOffice DB out of Aligne"
+lens:
+  compute: runnable-default
+  # required only if the repo is private
+  source:
+    type: minerva
+    name: minervac
+    catalog: lakehouse
+  repo:
+    url: https://github.com/jsampaiog/dataproduct
+    lensBaseDir: solutions-practices/dataproducts/bottom-up-controlling-dp/build/semantic-model/model
+    syncFlags:
+      - --ref=main
+
+  api:
+    logLevel: debug
+    replicas: 1
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+    envs:
+      LENS2_DB_TIMEOUT: "1500000"
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
+      LENS2_SOURCE_CATALOG_NAME: icebase
+  router:
+    logLevel: debug
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+    envs:
+      LENS2_DB_TIMEOUT: "1500000"
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
+      LENS2_SOURCE_CATALOG_NAME: icebase
+  worker:
+    logLevel: debug
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+    envs:
+      LENS2_DB_TIMEOUT: "1500000"
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
+      LENS2_SOURCE_CATALOG_NAME: icebase
+
+  iris:
+    logLevel: info
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+  metric:
+    logLevel: info
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi

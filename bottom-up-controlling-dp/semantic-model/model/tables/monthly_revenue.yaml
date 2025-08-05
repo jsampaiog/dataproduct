@@ -1,0 +1,107 @@
+tables:
+  - name: monthly_revenue
+    sql: {{ load_sql('monthly_revenue') }}
+    description: Source aligned data product for monthly revenue data.
+    public: true
+
+    dimensions:
+      - name: installation_id
+        type: string
+        column: installation_id
+        description: "The unique identifier for the installation."
+
+      - name: invoice_booking_date
+        type: time
+        column: invoice_booking_date
+        description: "The date when the invoice was booked."
+
+      - name: invoice_is_cancellation
+        type: boolean
+        column: invoice_is_cancellation
+        description: "Flag indicating if the invoice is a cancellation."
+
+      - name: invoice_is_cancelled
+        type: boolean
+        column: invoice_is_cancelled
+        description: "Flag indicating if the invoice has been cancelled."
+
+      - name: invoice_number
+        type: string
+        column: invoice_number
+        description: "The invoice number."
+
+      - name: invoice_type
+        type: string
+        column: invoice_type
+        description: "The type of invoice."
+
+      - name: original_delivery_from
+        type: time
+        column: original_delivery_from
+        description: "The original delivery start date."
+
+      - name: original_delivery_to
+        type: time
+        column: original_delivery_to
+        description: "The original delivery end date."
+
+      - name: original_total_amount
+        type: number
+        column: original_total_amount
+        description: "The original total amount."
+
+      - name: original_total_volume_mwh
+        type: number
+        column: original_total_volume_mwh
+        description: "The original total volume in MWh."
+
+      - name: split_amount
+        type: number
+        column: split_amount
+        description: "The split amount."
+
+      - name: split_delivery_from
+        type: time
+        column: split_delivery_from
+        description: "The split delivery start date."
+
+      - name: split_delivery_to
+        type: time
+        column: split_delivery_to
+        description: "The split delivery end date."
+
+      - name: split_volume_mwh
+        type: number
+        column: split_volume_mwh
+        description: "The split volume in MWh."
+
+      - name: volume_unit
+        type: string
+        column: volume_unit
+        description: "The unit of measurement for volume."
+
+    measures:
+      - name: original_total_amount_sum
+        sql: "{TABLE.original_total_amount}"
+        type: sum
+        description: "Sum of original total amounts."
+
+      - name: split_amount_sum
+        sql: "{TABLE.split_amount}"
+        type: sum
+        description: "Sum of split amounts."
+
+      - name: original_total_volume_mwh_sum
+        sql: "{TABLE.original_total_volume_mwh}"
+        type: sum
+        description: "Sum of original total volumes in MWh."
+
+      - name: split_volume_mwh_sum
+        sql: "{TABLE.split_volume_mwh}"
+        type: sum
+        description: "Sum of split volumes in MWh."
+
+      - name: count
+        sql: "{TABLE.invoice_number}"
+        type: count
+        description: "Total number of invoice records." 

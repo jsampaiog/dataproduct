@@ -1,0 +1,83 @@
+views:
+        
+  - name: invoice_details_insight
+    description: Consumer aligned data product metrics for invoice details and position mapping
+    public: true
+    meta:
+      tags:   
+        - DPDomain.Sales
+        - DPUsecase.Invoice Analysis
+        - DPTier.Consumer Aligned
+      metric:
+        expression: "0 0 1 */2 *"
+        timezone: "UTC"
+        window: "month"
+        excludes: 
+           - invoice_details_map_position.zkey   
+
+    tables:
+      - join_path: invoice_details_map_position
+        prefix: true
+
+        includes:
+          - count
+          - inv_amt
+          - original_total_amount
+          - split_amount
+          - original_total_volume_mwh
+          - split_volume_mwh
+          - vol_phys
+          - installation_id
+          - contract_name
+          - pod
+          - tnum
+          - invoice_booking_date
+          - planned_start_date
+          - planned_end_date
+
+  - name: bottom_up_controlling_insight
+    description: Bottom-up controlling data model metrics for comprehensive controlling analysis
+    public: true
+    meta:
+      tags:   
+        - DPDomain.Sales
+        - DPUsecase.Controlling Analysis
+        - DPTier.Consumer Aligned
+      metric:
+        expression: "0 0 1 */2 *"
+        timezone: "UTC"
+        window: "month"
+        excludes: 
+           - bottom_up_controlling.zkey   
+
+    tables:
+      - join_path: bottom_up_controlling
+        prefix: true
+
+        includes:
+          - count
+          - inv_amt
+          - original_total_amount
+          - split_amount
+          - original_total_volume_mwh
+          - split_volume_mwh
+          - vol_phys
+          - book
+          - booking_month
+          - delivery_month
+          - customer
+          - country
+          - cpty
+          - segment
+          - sub_segment
+          - installation_id
+          - contract_name
+          - pod
+          - tnum
+          - tnumgroup
+          - invoice_booking_date
+          - planned_start_date
+          - planned_end_date
+          - table_name
+
+ 
