@@ -9,16 +9,22 @@ tables:
         type: string
         column: book
         description: "The book identifier for the transaction."
+        primary_key: true
+        public: true
 
       - name: booking_month
         type: time
         column: booking_month
         description: "The month when the booking was made."
+        primary_key: true
+        public: true
 
       - name: country
         type: string
         column: country
         description: "The country where the transaction occurred."
+        primary_key: true
+        public: true
 
       - name: cpty
         type: string

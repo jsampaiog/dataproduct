@@ -2,6 +2,5 @@
 -- This represents the diminstallationlast-dp data product
 
 SELECT
-    installation_id,
     installation_last_ext_pod_id
 FROM "icebase"."bottom_up"."dim_installation_last" 

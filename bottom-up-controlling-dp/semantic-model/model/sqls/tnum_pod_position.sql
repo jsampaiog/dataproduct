@@ -7,4 +7,4 @@ SELECT
     planned_end_date,
     tnum,
     contract_name
-FROM "icebase"."bottom_up"."tnum_pod_position" 
+FROM "icebase"."bottom_up"."tnum_pod_position"

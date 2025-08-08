@@ -4,12 +4,19 @@ tables:
     description: Source aligned data product for installation dimension data.
     public: true
 
+    joins:
+      - name: tnum_pod_position
+        relationship: one_to_many
+        sql: "{TABLE.installation_last_ext_pod_id} = {tnum_pod_position.metering_code}"
+        description: "Join on installation_last_ext_pod_id from dim_installation_last and metering_code from tnum_pod_position"
+
     dimensions:
       - name: installation_id
         type: string
         column: installation_id
         description: "The unique identifier for the installation."
         primary_key: true
+        public: true
 
       - name: installation_last_ext_pod_id
         type: string

@@ -4,16 +4,31 @@ tables:
     description: Source aligned data product for monthly revenue data.
     public: true
 
+    joins:
+      - name: dim_installation_last
+        relationship: one_to_many
+        sql: "{TABLE.installation_id} = {dim_installation_last.installation_last_ext_pod_id}"
+        description: "Join on installation_id from monthly_revenue and installation_last_ext_pod_id from dim_installation_last"
+
+      - name: tnum_pod_position
+        relationship: one_to_many
+        sql: "{TABLE.installation_id} = {tnum_pod_position.metering_code}"
+        description: "Join on installation_id from monthly_revenue and metering_code from tnum_pod_position"
+
     dimensions:
       - name: installation_id
         type: string
         column: installation_id
         description: "The unique identifier for the installation."
+        primary_key: true
+        public: true
 
       - name: invoice_booking_date
         type: time
         column: invoice_booking_date
         description: "The date when the invoice was booked."
+        primary_key: true
+        public: true
 
       - name: invoice_is_cancellation
         type: boolean

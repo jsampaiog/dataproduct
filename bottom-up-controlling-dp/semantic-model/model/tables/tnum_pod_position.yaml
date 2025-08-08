@@ -4,21 +4,33 @@ tables:
     description: Source aligned data product for transaction number and POD position data.
     public: true
 
+    joins:
+      - name: tp_invoice_power
+        relationship: one_to_many
+        sql: "{TABLE.tnum} = {tp_invoice_power.tnum}"
+        description: "Join on tnum from tnum_pod_position and tnum from tp_invoice_power"
+
     dimensions:
       - name: metering_code
         type: string
         column: metering_code
         description: "The metering code for the position."
+        primary_key: true
+        public: true
 
       - name: planned_start_date
         type: time
         column: planned_start_date
         description: "The planned start date for the position."
+        primary_key: true
+        public: true
 
       - name: planned_end_date
         type: time
         column: planned_end_date
         description: "The planned end date for the position."
+        primary_key: true
+        public: true
 
       - name: tnum
         type: string
