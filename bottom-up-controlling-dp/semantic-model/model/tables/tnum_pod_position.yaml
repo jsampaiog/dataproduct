@@ -8,7 +8,6 @@ tables:
       - name: tp_invoice_power
         relationship: one_to_many
         sql: "{TABLE.tnum} = {tp_invoice_power.tnum}"
-        description: "Join on tnum from tnum_pod_position and tnum from tp_invoice_power"
 
     dimensions:
       - name: metering_code

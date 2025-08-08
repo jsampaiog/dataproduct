@@ -8,12 +8,10 @@ tables:
       - name: dim_installation_last
         relationship: one_to_many
         sql: "{TABLE.installation_id} = {dim_installation_last.installation_last_ext_pod_id}"
-        description: "Join on installation_id from monthly_revenue and installation_last_ext_pod_id from dim_installation_last"
 
       - name: tnum_pod_position
         relationship: one_to_many
         sql: "{TABLE.installation_id} = {tnum_pod_position.metering_code}"
-        description: "Join on installation_id from monthly_revenue and metering_code from tnum_pod_position"
 
     dimensions:
       - name: installation_id
