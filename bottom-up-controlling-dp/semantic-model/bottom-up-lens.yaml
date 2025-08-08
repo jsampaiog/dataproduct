@@ -51,7 +51,7 @@ lens:
         cpu: 200m
         memory: 512Mi
     envs:
-      DATAOS_RUN_AS_APIKEY: "{{ env.DATAOS_RUN_AS_APIKEY }}"
+      DATAOS_RUN_AS_APIKEY: "d29ya3NwYWNlLjA4MjkxZmE2LTgxNzktNGU2Yi1hNWVjLWIxMDQzZWJjODU1Ng=="
       #LENS2_DB_TIMEOUT: "1500000"
       LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
       #LENS2_SOURCE_CATALOG_NAME: icebase
