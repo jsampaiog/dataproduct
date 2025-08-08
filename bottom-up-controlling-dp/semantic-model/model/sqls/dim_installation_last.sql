@@ -3,4 +3,4 @@
 
 SELECT
     installation_last_ext_pod_id
-FROM "icebase"."bottom_up"."dim_installation_last" 
+FROM "icebase"."bottomup"."dim_installation_last" 

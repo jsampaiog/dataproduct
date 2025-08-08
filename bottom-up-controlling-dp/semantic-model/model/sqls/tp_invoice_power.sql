@@ -17,4 +17,4 @@ SELECT
     tnumgroup,
     vol_phys,
     zkey
-FROM "icebase"."bottom_up"."tp_invoice_power" 
+FROM "icebase"."bottomup"."tp_invoice_power" 

@@ -17,6 +17,9 @@ It relies on Invoicing data out of SAP, and calculations done in MidOffice DB ou
 lens:
   compute: runnable-default
   # required only if the repo is private
+  secrets:
+    - name: salesgit
+      allKeys: true
   source:
     type: minerva
     name: minervac
@@ -26,6 +29,7 @@ lens:
     lensBaseDir: dataproduct/bottom-up-controlling-dp/semantic-model/model
     syncFlags:
       - --ref=main
+
 
   api:
     logLevel: debug

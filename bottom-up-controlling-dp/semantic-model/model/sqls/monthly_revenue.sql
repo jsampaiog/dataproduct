@@ -3,4 +3,4 @@
 
 SELECT
     *
-FROM "icebase"."bottom_up"."monthly_revenue" 
+FROM "icebase"."bottomup"."monthly_revenue" 
