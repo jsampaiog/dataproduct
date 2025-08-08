@@ -38,9 +38,9 @@ lens:
         cpu: 1000m
         memory: 1024Mi
     envs:
-      LENS2_DB_TIMEOUT: "1500000"
+      #LENS2_DB_TIMEOUT: "1500000"
       LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
-      LENS2_SOURCE_CATALOG_NAME: icebase
+      #LENS2_SOURCE_CATALOG_NAME: icebase
   router:
     logLevel: debug
     resources:
@@ -51,9 +51,10 @@ lens:
         cpu: 200m
         memory: 512Mi
     envs:
-      LENS2_DB_TIMEOUT: "1500000"
+      DATAOS_RUN_AS_APIKEY: "{{ env.DATAOS_RUN_AS_APIKEY }}"
+      #LENS2_DB_TIMEOUT: "1500000"
       LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
-      LENS2_SOURCE_CATALOG_NAME: icebase
+      #LENS2_SOURCE_CATALOG_NAME: icebase
   worker:
     logLevel: debug
     replicas: 1
@@ -65,9 +66,9 @@ lens:
         cpu: 200m
         memory: 512Mi
     envs:
-      LENS2_DB_TIMEOUT: "1500000"
+      #LENS2_DB_TIMEOUT: "1500000"
       LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
-      LENS2_SOURCE_CATALOG_NAME: icebase
+      #LENS2_SOURCE_CATALOG_NAME: icebase
 
   iris:
     logLevel: info
