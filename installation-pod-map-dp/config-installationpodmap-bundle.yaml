@@ -1,0 +1,33 @@
+name: installationpodmap-bundle
+version: v1beta
+type: bundle
+description: Installation Pod Map Data Product Bundle - Source-aligned data product for mapping installations to their associated pods, providing critical relationship data for operational and analytical purposes
+layer: user
+bundle:
+  resources:
+    - id: installationpodmap_source_quality
+      file: data_products/source_aligned/installation-pod-map/config_source_installationpodmap_data_quality.yaml
+      workspace: public
+
+    - id: installationpodmap_depot
+      file: data_products/depot/config_postresql_depot.yaml
+      workspace: public
+
+    - id: installationpodmap_ingestion
+      file: data_products/source_aligned/installation-pod-map/config_installationpodmap_data_ingestion.yaml
+      workspace: public
+      dependencies:
+        - installationpodmap_depot
+        - installationpodmap_source_quality
+
+    - id: installationpodmap_data_quality
+      file: data_products/source_aligned/installation-pod-map/config_installationpodmap_data_quality.yaml
+      workspace: public
+      dependencies:
+        - installationpodmap_ingestion
+
+    - id: installationpodmap_lens
+      file: data_products/source_aligned/installation-pod-map/installation-pod-map-lens.yaml
+      workspace: public
+      dependencies:
+        - installationpodmap_data_quality

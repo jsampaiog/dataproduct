@@ -1,0 +1,89 @@
+---
+version: v1alpha
+name: "installationpodmap"
+layer: user
+type: lens
+tags:
+  - Domain.Sales
+  - lens
+  - DPTier.Source Aligned
+  - DPUsecase.SourceAligned
+description: "Installation Pod Map is a high-value data product designed to provide reliable insights into installation to pod mapping relationships.
+The Installation Pod Map data product supports operational analysis by:
+Providing a clear mapping between installations and their associated pods for operational transparency.
+Enabling users to analyze installation distribution across different pods and identify optimization opportunities.
+Offering critical relationship data for operational and analytical purposes.
+It relies on installation data from SAP and provides a standardized view of installation-pod relationships."
+lens:
+  compute: runnable-default
+  # required only if the repo is private
+  secrets:
+    - name: salesgit
+      allKeys: true
+  source:
+    type: minerva
+    name: minervac
+    catalog: icebase
+  repo:
+    url: https://github.com/jsampaiog/dataproduct
+    lensBaseDir: dataproduct/installation-pod-map-dp/semantic-model/model
+    syncFlags:
+      - --ref=main
+
+  api:
+    logLevel: debug
+    replicas: 1
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+    envs:
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
+  router:
+    logLevel: debug
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+    envs:
+      DATAOS_RUN_AS_APIKEY: "d29ya3NwYWNlLjA4MjkxZmE2LTgxNzktNGU2Yi1hNWVjLWIxMDQzZWJjODU1Ng=="
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
+  worker:
+    logLevel: debug
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+    envs:
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: UTC,America/Vancouver,America/Toronto
+
+  iris:
+    logLevel: info
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+  metric:
+    logLevel: info
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi

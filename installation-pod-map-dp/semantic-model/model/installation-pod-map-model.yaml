@@ -1,0 +1,14 @@
+version: v1
+name: installation-pod-map-model
+description: Semantic model for installation-pod mapping data product
+models:
+  - name: installation_pod_map
+    description: Installation to pod mapping data
+    columns:
+      - name: installation_id
+        description: Unique identifier for the installation
+        type: string
+        primary_key: true
+      - name: installation_last_ext_pod_id
+        description: External pod identifier associated with the installation
+        type: string

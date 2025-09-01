@@ -1,0 +1,48 @@
+name: installationpodmap-dp
+version: v1beta
+entity: product
+type: data
+purpose: The purpose of this data product is to provide a centralized repository of installation to pod mapping relationships.
+tags:   
+  - DPDomain.Sales
+  - DPUsecase.SourceAligned 
+  - DPTier.Source Aligned
+description: Installation to pod mapping data providing critical relationship information between installations and their associated pods.
+refs:
+  - title: 'Official confluence documentation'
+    href:  https://confluence.docs/
+
+v1beta:
+  data:
+    meta:
+      title: Installation Pod Map Data Product
+      sourceCodeUrl: https://github.com/jsampaiog/dataproduct.git
+
+    collaborators:
+
+      - name: josegomes
+        description: developer
+
+    resource:
+      description: A Bundle streamlines data ingestion, quality checks, and processing for installation-pod mapping data, ensuring efficient and reliable data flow across systems.
+      refType: dataos
+      ref: bundle:v1beta:installationpodmap-bundle
+    inputs:
+      - description: Source dataset from SAP containing installation and pod mapping information.
+        purpose: Raw installation-pod mapping dataset. 
+        refType: dataos
+        ref: dataos://practicepostgres001:public/dim_installation_last
+    outputs:
+      - description: Processed installation-pod mapping dataset.
+        purpose: Transformed, analytics-ready installation-pod mapping data.       
+        refType: dataos
+        ref: dataos://icebase:bottomup/installation_pod_map
+
+    ports:
+        lens:
+        ref: lens:v1alpha:installationpodmap-lens:public
+        refType: dataos
+
+        talos:
+        ref: service:v1:service-installationpodmap-api:public
+        refType: dataos

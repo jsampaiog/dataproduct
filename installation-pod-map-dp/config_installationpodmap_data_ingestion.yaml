@@ -1,0 +1,64 @@
+version: v1
+name: wf-installationpodmap-ingestion
+type: workflow
+tags:
+  - Tier.Gold
+  - Domain.Sales
+description: Modelled view from SAP data reflecting last link between installation and pod for installation-pod mapping.
+workflow:
+  title: Installation vs. Pod Mapping Ingestion
+  dag:
+    - name: installationpodmap-ingestion
+      description: Ingest and cleanse installation-pod mapping dataset from Postgres for standardized storage and analytics.
+      title: Installation vs. Pod Mapping Processing
+      spec:
+        tags:
+          - Domain.Sales
+        stack: flare:6.0
+        compute: runnable-default
+        stackSpec:
+          driver:
+            coreLimit: 1200m
+            cores: 1
+            memory: 1024m
+          executor:
+            coreLimit: 1200m
+            cores: 1
+            instances: 1
+            memory: 1024m  
+          job:
+            explain: true
+            inputs:
+              - name: dim_installation_last
+                dataset: dataos://practicepostgres001:public/dim_installation_last?acl=rw
+                options:
+                  driver: org.postgresql.Driver
+
+            logLevel: INFO
+            outputs:
+              - name: final
+                dataset: dataos://icebase:bottomup/installation_pod_map?acl=rw
+                format: Iceberg
+                description: >
+                  The output is a cleansed, standardized, and enriched installation-pod mapping dataset ready for analytics and reporting. This table stores detailed information about the relationship between installations and their associated pods, providing critical mapping data for operational and analytical purposes.
+                tags:
+                  - Domain.Sales
+                  - Tier.Gold
+                options:
+                  saveMode: overwrite
+                  iceberg:
+                    properties:
+                      write.format.default: parquet
+                      writem.etadata.compression-codec: gzip
+                title: Cleaned Installation Pod Map Data Output
+            steps:
+              - sequence:
+                  - name: final
+                    sql: >
+                        select 
+                          *
+                        from dim_installation_last
+                    functions:
+                      - name: cleanse_column_names
+                      - name: change_column_case 
+                        case: lower

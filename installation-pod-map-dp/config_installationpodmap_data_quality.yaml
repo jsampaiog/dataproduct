@@ -1,0 +1,71 @@
+name: wf-installationpodmap-data-quality
+version: v1
+type: workflow
+tags:
+  - Tier.Gold
+description: The role involves conducting thorough and detailed quality analysis, including data assertion, of installation-pod mapping data using the advanced features of the DataOS platform.
+workspace: public
+workflow:
+  schedule:
+    cron: '*/5 * * * *'
+    concurrencyPolicy: Forbid
+  #   endOn: 2024-12-02T13:40:00Z   
+  #   timezone: Asia/Kolkata
+  dag:
+    - name: installationpodmap-data-quality
+      description: The role involves conducting thorough and detailed quality analysis, including data assertion, of installation-pod mapping data using the advanced features of the DataOS platform.
+      title: Installation Pod Map Data Quality Assertion 
+      spec:
+        stack:  soda+python:1.0 
+        logLevel: INFO
+        compute: runnable-default
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 250Mi
+          limits:
+            cpu: 1000m
+            memory: 250Mi
+        stackSpec:
+          inputs:
+            - dataset: dataos://icebase:bottomup/installation_pod_map?acl=rw 
+              options:
+                engine: minerva
+                clusterName: minervac
+
+              checks:
+                - missing_count(installation_id) = 0:
+                    name: Completeness of the installation_id Column
+                    attributes:
+                      category: Completeness      
+
+                - missing_count(installation_last_ext_pod_id) = 0:
+                    name: Completeness of the installation_last_ext_pod_id Column
+                    attributes:
+                      category: Completeness
+
+                - duplicate_count(installation_id) = 0:
+                    name: Uniqueness of the installation_id Column
+                    attributes:
+                      category: Uniqueness
+
+                - row_count > 0:
+                    name: Dataset contains data
+                    attributes:
+                      category: Completeness
+
+                - schema:
+                    name: Confirm that required columns are present
+                    warn:
+                      when required column missing: [installation_id, installation_last_ext_pod_id]
+                    fail:
+                      when required column missing:
+                        - installation_id
+                        - installation_last_ext_pod_id
+
+                    attributes:
+                      category: Schema                            
+
+              profile:
+                columns:
+                  - "*"                      

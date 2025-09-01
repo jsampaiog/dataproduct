@@ -1,0 +1,74 @@
+version: v1
+name: installation-pod-map-user-groups
+description: User groups and access control for installation-pod-map data product
+
+groups:
+  - name: installation-pod-map-admins
+    description: Full administrative access to installation-pod-map data product
+    permissions:
+      - read
+      - write
+      - delete
+      - admin
+    users:
+      - josegomes
+    tags:
+      - role: admin
+      - tier: gold
+
+  - name: installation-pod-map-analysts
+    description: Read and query access for business analysts
+    permissions:
+      - read
+      - query
+    users:
+      - business_analysts
+      - sales_team
+      - operations_team
+    tags:
+      - role: analyst
+      - tier: silver
+
+  - name: installation-pod-map-viewers
+    description: Read-only access for general users
+    permissions:
+      - read
+    users:
+      - general_users
+      - stakeholders
+    tags:
+      - role: viewer
+      - tier: bronze
+
+  - name: installation-pod-map-developers
+    description: Development and testing access
+    permissions:
+      - read
+      - write
+    users:
+      - development_team
+      - qa_team
+    tags:
+      - role: developer
+      - tier: silver
+
+access_control:
+  default_permission: read
+  require_authentication: true
+  audit_logging: true
+  
+  data_masking:
+    - column: installation_id
+      mask_type: hash
+      visible_to: [installation-pod-map-admins, installation-pod-map-analysts]
+    
+    - column: installation_last_ext_pod_id
+      mask_type: hash
+      visible_to: [installation-pod-map-admins, installation-pod-map-analysts]
+
+  row_level_security:
+    enabled: true
+    policies:
+      - name: installation_pod_map_rls
+        description: Row-level security based on user groups
+        filter: "user_group IN (SELECT group_name FROM user_groups WHERE user_id = current_user())"
